@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Corporate-Credit-Management-Platform
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/creditPlatform
+      database: creditPlatform
+
+app:
+  admin:
+    password: admin123
+
+jwt:
+  secret: corporate-bank-secret-key-change-this
+  expiration: 86400000   # 1 day in milliseconds
+
+
