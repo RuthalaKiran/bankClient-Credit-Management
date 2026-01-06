@@ -1,4 +1,3 @@
-
 //  AUTH TYPES
 
 export type Role = "ADMIN" | "RM" | "ANALYST";
@@ -23,7 +22,6 @@ export interface CreateUserRequest {
   role: Role;
 }
 
-
 export interface AuthData {
   token: string;
   role: Role;
@@ -36,9 +34,7 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-
 //  CLIENT TYPES
-
 
 export interface PrimaryContact {
   name: string;
@@ -66,9 +62,7 @@ export interface ClientCreateRequest {
   documentsSubmitted: boolean;
 }
 
-
 //  CREDIT REQUEST TYPES
-
 
 export type CreditStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -96,7 +90,6 @@ export interface CreditRequestUpdate {
   remarks: string;
 }
 
-
 //  MENU TYPES
 
 export interface MenuState {
@@ -104,4 +97,6 @@ export interface MenuState {
   rmActivePath: string;
   analystActivePath: string;
 }
+
+
 
