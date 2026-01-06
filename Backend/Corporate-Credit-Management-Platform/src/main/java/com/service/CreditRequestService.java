@@ -31,14 +31,18 @@ public class CreditRequestService {
 
 
 
-    // helper get rmId from the token
+    /**
+     * to populate rmId from the jwt token
+     */
     private String extractUserIdFromToken() {
         String authHeader = request.getHeader("Authorization");
         String token = authHeader.substring(7);
         return jwtService.extractUserId(token);
     }
 
-    // create credit request by rm
+    /**
+     * create credit request by rm
+     */
     public CreditRequestResponseDTO createCreditRequest(
             CreditRequestCreateDTO dto) {
 
@@ -59,7 +63,9 @@ public class CreditRequestService {
         return mapToResponse(creditRepo.save(credit));
     }
 
-    // get credit requests if rm show only own if analyst show all
+    /**
+     * get credit requests if rm show only own if analyst show all
+     */
     public List<CreditRequestResponseDTO> getCreditRequests() {
 
         Authentication auth =
@@ -82,7 +88,9 @@ public class CreditRequestService {
                 .toList();
     }
 
-    // get by id
+    /**
+     * get credit request by id
+     */
     public CreditRequestResponseDTO getById(String id) {
 
         Authentication auth =
@@ -107,7 +115,9 @@ public class CreditRequestService {
         return mapToResponse(credit);
     }
 
-    // update credit request by only analyst
+    /**
+     * update credit request by only analyst
+     */
     public CreditRequestResponseDTO updateStatus(
             String id, CreditRequestUpdateDTO dto) {
 
@@ -122,7 +132,9 @@ public class CreditRequestService {
         return mapToResponse(creditRepo.save(credit));
     }
 
-    // dto for credit request response
+    /**
+     * mapper for CreditRequestResponseDTO
+     */
     private CreditRequestResponseDTO mapToResponse(CreditRequest credit) {
         return CreditRequestResponseDTO.builder()
                 .id(credit.getId())

@@ -17,6 +17,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    /**
+     * get current user based on jwt token
+     */
     public UserResponseDTO getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -28,6 +31,9 @@ public class UserService {
         return mapToDto(user);
     }
 
+    /**
+     * get all users
+     */
     public List<UserResponseDTO> getAllUsers(){
         return userRepository.findAll()
                 .stream()
@@ -35,6 +41,9 @@ public class UserService {
                 .toList();
     }
 
+    /**
+     * mapper for UserResponseDTO
+     */
     private UserResponseDTO mapToDto(User user){
         return UserResponseDTO.builder()
                 .id(user.getId())

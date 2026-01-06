@@ -16,6 +16,9 @@ public class AdminUserService {
 
     private final UserRepository userRepository;
 
+    /**
+     * update user status to active or inactive only by admin
+     */
     public UserResponseDTO updateUserStatus(String userId, Boolean active) {
 
         if (active == null) {

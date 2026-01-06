@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * handle credit requests related endpoints
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/credit-requests")
@@ -20,7 +23,9 @@ public class CreditRequestController {
 
     private final CreditRequestService creditService;
 
-    // CREATE — RM ONLY
+    /**
+     * create credit request only by RM endpoint
+     */
     @PostMapping
     public ResponseEntity<ApiResponse<CreditRequestResponseDTO>> create(
             @Valid @RequestBody CreditRequestCreateDTO request) {
@@ -35,7 +40,9 @@ public class CreditRequestController {
     }
 
 
-    // GET — RM (own) / ANALYST (all)
+    /**
+     * used to get own credit requests if RM else all credit requests for ANALYST endpoint
+     */
     @GetMapping
     public ResponseEntity<ApiResponse<List<CreditRequestResponseDTO>>> getAll() {
         List<CreditRequestResponseDTO> creditRequestResponseDTOList = creditService.getCreditRequests();
@@ -47,7 +54,9 @@ public class CreditRequestController {
         );
     }
 
-    // GET BY ID
+    /**
+     * get credit request by id endpoint
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CreditRequestResponseDTO>> getById(
             @PathVariable String id) {
@@ -61,7 +70,9 @@ public class CreditRequestController {
     }
 
 
-    // UPDATE — ANALYST ONLY
+    /**
+     * update credit request only by the ANALYST endpoint
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CreditRequestResponseDTO>> update(
             @PathVariable String id,

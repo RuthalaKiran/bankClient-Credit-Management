@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * handle user related endpoints
+ */
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -23,7 +26,7 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     /**
-     * get current user by jwt token
+     * get current user by jwt token endpoint
      */
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponseDTO>> getCurrentUser(){
@@ -32,6 +35,9 @@ public class UserController {
         return ResponseEntity.ok().body(ApiResponse.success("Current user fetched successfully",userResponseDTO));
     }
 
+    /**
+     * used to fetch all the users endpoint
+     */
     @GetMapping
     public ResponseEntity<ApiResponse<List<UserResponseDTO>>> getAllUsers(){
         logger.info("Requested to fetch all users");

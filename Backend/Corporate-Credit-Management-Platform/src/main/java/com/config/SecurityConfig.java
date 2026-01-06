@@ -24,6 +24,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * used to handle all the security rules and requestMatchers
+ */
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {

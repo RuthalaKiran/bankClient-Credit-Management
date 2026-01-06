@@ -18,7 +18,9 @@ public class AuthService {
     private final PasswordEncoder encoder;
     private final JwtService jwtService;
 
-    // ADMIN creates RM / ANALYST
+    /**
+     * admin can crate RM or ANALYST
+     */
     public ApiResponse<String> register(RegisterRequestDTO req) {
 
         if (userRepo.findByEmail(req.getEmail()).isPresent()) {
@@ -39,7 +41,9 @@ public class AuthService {
                 "User created successfully", null);
     }
 
-    // LOGIN
+    /**
+     * login for ADMIN or RM or ANALYST
+     */
     public ApiResponse<AuthDataDTO> login(LoginRequestDTO req) {
 
         User user = userRepo.findByEmail(req.getEmail())

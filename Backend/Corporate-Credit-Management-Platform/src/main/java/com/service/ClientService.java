@@ -10,6 +10,7 @@ import com.repository.ClientRepository;
 import com.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,14 +26,20 @@ public class ClientService {
 
     private final HttpServletRequest request;
 
-    // to fetch rmId from the jwt token
+
+    /**
+     * to populate rmId from the jwt token
+     */
     private String getCurrentUserId() {
         String authHeader = request.getHeader("Authorization");
         String token = authHeader.substring(7); // Bearer <token>
         return jwtService.extractUserId(token);
     }
 
-    // CREATE CLIENT (RM ONLY)
+
+    /**
+     * create client only by RM
+     */
     public ClientResponseDTO createClient(ClientRequestDTO dto) {
 
         // getting rmId from the token
@@ -57,7 +64,10 @@ public class ClientService {
         return mapToResponse(clientRepository.save(client));
     }
 
-    // GET OWN CLIENTS
+
+    /**
+     * get RM own clients and filtration based on industry and company name
+     */
     public List<ClientResponseDTO> getMyClients(String name, String industry) {
 
         String rmId = getCurrentUserId();
@@ -78,7 +88,10 @@ public class ClientService {
                 .toList();
     }
 
-    // GET CLIENT BY ID (OWNERSHIP CHECK)
+
+    /**
+     * get client by id
+     */
     public ClientResponseDTO getClientById(String id) {
 
         String rmId = getCurrentUserId();
@@ -91,7 +104,9 @@ public class ClientService {
         return mapToResponse(client);
     }
 
-    // UPDATE CLIENT
+    /**
+     * update client
+     */
     public ClientResponseDTO updateClient(String id, ClientRequestDTO dto) {
 
         String rmId = getCurrentUserId();
@@ -118,7 +133,9 @@ public class ClientService {
         return mapToResponse(clientRepository.save(client));
     }
 
-    // GET ALL CLIENTS FOR ADMIN
+    /**
+     * get all clients for admin
+     */
     public List<ClientResponseDTO> getAllClientsForAdmin(){
         List<Client> clients = clientRepository.findAll();
 
@@ -127,7 +144,9 @@ public class ClientService {
                 .toList();
     }
 
-    // MAPPER
+    /**
+     * mapper for ClientResponseDTO
+     */
     private ClientResponseDTO mapToResponse(Client client) {
         return ClientResponseDTO.builder()
                 .id(client.getId())

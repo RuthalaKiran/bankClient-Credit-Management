@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * handle auth endpoints
+ */
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -24,6 +27,9 @@ public class AuthController {
 
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+    /**
+     * user register endpoint
+     */
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<String>> register(@Valid
             @RequestBody RegisterRequestDTO request) {
@@ -32,6 +38,9 @@ public class AuthController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
+    /**
+     * user login endpoint
+     */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthDataDTO>> login(@Valid
             @RequestBody LoginRequestDTO request) {

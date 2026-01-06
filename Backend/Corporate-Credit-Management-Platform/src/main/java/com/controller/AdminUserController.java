@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * handle admin related endpoints
+ */
 @RestController
 @RequestMapping("/api/admin/users")
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class AdminUserController {
     private final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
     /**
-     * update user status
+     * update user status endpoint
      */
     @PutMapping("/{id}/status")
     public ResponseEntity<ApiResponse<UserResponseDTO>> updateUserStatus(

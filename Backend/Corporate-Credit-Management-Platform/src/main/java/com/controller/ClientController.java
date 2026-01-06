@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * handle client related endpoints
+ */
 @RestController
 @RequiredArgsConstructor
 public class ClientController {
 
     private final ClientService clientService;
 
-    // CREATE CLIENT
+    /**
+     * create client endpoint
+     */
     @PostMapping("/api/rm/clients")
     public ResponseEntity<ApiResponse<ClientResponseDTO>> createClient(
             @Valid @RequestBody ClientRequestDTO request) {
@@ -32,7 +37,10 @@ public class ClientController {
                 ));
     }
 
-    // GET OWN CLIENTS + SEARCH
+    /**
+     * used to get clients based on filtration
+     * return own clients for rm and filtration endpoint
+     */
     @GetMapping("/api/clients")
     public ResponseEntity<ApiResponse<List<ClientResponseDTO>>> getMyClients(
             @RequestParam(required = false) String name,
@@ -47,7 +55,9 @@ public class ClientController {
                 ) );
     }
 
-    // GET CLIENT BY ID
+    /**
+     * get clients by id endpoint
+     */
     @GetMapping("/api/clients/{id}")
     public ResponseEntity<ApiResponse<ClientResponseDTO>> getClientById(
             @PathVariable String id) {
@@ -62,7 +72,9 @@ public class ClientController {
         );
     }
 
-    // UPDATE CLIENT
+    /**
+     * update client endpoint
+     */
     @PutMapping("/api/clients/{id}")
     public ResponseEntity<ApiResponse<ClientResponseDTO>> updateClient(
             @PathVariable String id,
@@ -78,7 +90,9 @@ public class ClientController {
         );
     }
 
-    // GET ALL CLIENTS FOR ADMIN
+    /**
+     * get all clients for admin endpoint
+     */
     @GetMapping("/api/admin/clients")
     public ResponseEntity<ApiResponse<List<ClientResponseDTO>>> getAllClientsAdmin(){
         List<ClientResponseDTO> clientResponseDTOList = clientService.getAllClientsForAdmin();

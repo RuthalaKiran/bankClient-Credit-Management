@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 
+/**
+ * contains all jwt service methods
+ */
 @Service
 public class JwtService {
 

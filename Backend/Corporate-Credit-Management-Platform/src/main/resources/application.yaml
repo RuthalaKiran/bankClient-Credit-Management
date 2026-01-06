@@ -14,7 +14,7 @@ app:
     password: admin123
 
 jwt:
-  secret: corporate-bank-secret-key-change-this
+  secret: corporate-bank-credit-management-secret
   expiration: 86400000   # 1 day in milliseconds
 
 

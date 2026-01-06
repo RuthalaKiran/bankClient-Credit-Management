@@ -8,6 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+/**
+ * represent credit_requests table in mongodb
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,7 +30,7 @@ public class CreditRequest {
 
     /**
      * Relationship:
-     * RM (User) → Credit Requests
+     * RM  → Credit Requests
      */
     @Indexed
     private String submittedBy;

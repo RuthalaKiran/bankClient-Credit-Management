@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * used to throw Unauthorized error in consistent api format
+ */
 @Component
 public class JwtAuthenticationEntryPoint
         implements AuthenticationEntryPoint {

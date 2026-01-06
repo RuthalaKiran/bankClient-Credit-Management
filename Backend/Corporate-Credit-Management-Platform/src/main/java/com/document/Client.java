@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+/**
+ * represent clients table in mongodb
+ */
 @Data
 @Builder
 @AllArgsConstructor

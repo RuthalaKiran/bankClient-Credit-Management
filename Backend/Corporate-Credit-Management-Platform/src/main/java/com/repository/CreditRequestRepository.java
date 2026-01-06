@@ -10,9 +10,14 @@ import java.util.Optional;
 @Repository
 public interface CreditRequestRepository extends MongoRepository<CreditRequest,String> {
 
+    /**
+     * find all credit requests based on rmId
+     */
     List<CreditRequest> findBySubmittedBy(String rmId);
 
+    /**
+     * find the credit request based on the id
+     */
     Optional<CreditRequest> findByIdAndSubmittedBy(String id, String rmId);
-
 
 }
