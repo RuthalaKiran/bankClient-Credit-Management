@@ -10,6 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Spring Security does not understand your User entity directly.
+ * It only understands UserDetails.
+ * So we create CustomUserDetails to adapt our User entity to Spring Security.
+ */
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 

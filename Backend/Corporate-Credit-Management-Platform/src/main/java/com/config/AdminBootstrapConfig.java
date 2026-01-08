@@ -49,7 +49,7 @@ public class AdminBootstrapConfig {
 
                 userRepository.save(admin);
 
-                logger.info( "Admin created at startup");
+                logger.info("Admin created at startup");
 
             }
         };

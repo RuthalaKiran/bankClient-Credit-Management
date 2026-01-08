@@ -42,19 +42,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (jwtService.isTokenValid(token, userDetails.getUsername())) {
 
+                // uses to create authentication object
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities());
 
+                // This attaches extra request metadata like ip address , session id etc..
                 auth.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
 
+                // User is authenticated and set to security context
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
 
+        // Pass the request to the next filter
         chain.doFilter(request, response);
     }
-
 
 }
