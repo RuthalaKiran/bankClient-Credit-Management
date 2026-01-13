@@ -13,7 +13,7 @@ services:
     build: ./backend/Corporate-Credit-Management-Platform
     container_name: capstone-backend
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - mongo
     environment:
@@ -23,7 +23,7 @@ services:
     build: ./frontend
     container_name: capstone-frontend
     ports:
-      - "5173:80"
+      - "80:80"
     depends_on:
       - backend
 

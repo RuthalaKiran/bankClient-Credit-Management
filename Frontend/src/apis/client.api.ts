@@ -1,7 +1,7 @@
 import type { ClientCreateRequest } from "../types";
 import api from "./axios";
 
-
+//  create client
 export const createClientApi = async (payload: ClientCreateRequest) => {
   const res = await api.post("/api/rm/clients", payload);
   return res.data;

@@ -116,7 +116,6 @@ const AnalystDashboard = () => {
         <h3 className="text-lg font-semibold mb-4">
           All Credit Requests
         </h3>
-
         {content}
       </div>
     </div>

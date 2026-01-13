@@ -6,6 +6,7 @@ const api = axios.create({
   baseURL: "http://localhost:8080",
 });
 
+// add the jwt token for every reques
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -14,6 +15,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// auto logout if status code is 401
 api.interceptors.response.use(
   (res) => res,
   (err) => {

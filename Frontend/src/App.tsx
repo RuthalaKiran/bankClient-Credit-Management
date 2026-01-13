@@ -25,28 +25,44 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
+        {/* main private route */}
         <Route element={<PrivateRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<RoleDashboard />} />
 
+            {/* role route for ADMIN */}
             <Route element={<RoleRoute role="ADMIN" />}>
               <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/admin/users/create" element={<CreateUser />} />
             </Route>
 
+            {/* role route for RM */}
             <Route element={<RoleRoute role="RM" />}>
               <Route path="/rm/clients" element={<RMClients />} />
               <Route path="/rm/clients/create" element={<CreateRMClients />} />
               <Route path="/rm/clients/:id" element={<ViewClient />} />
               <Route path="/rm/clients/:id/edit" element={<EditClient />} />
-              <Route path="/rm/credit-requests" element={<RMCreditRequests />} />
-              <Route path="/rm/credit-requests/create" element={<CreateRMCreditRequests />} />
-              <Route path="/rm/credit-requests/:id" element={<ViewRMCreditRequest />} />
+              <Route
+                path="/rm/credit-requests"
+                element={<RMCreditRequests />}
+              />
+              <Route
+                path="/rm/credit-requests/create"
+                element={<CreateRMCreditRequests />}
+              />
+              <Route
+                path="/rm/credit-requests/:id"
+                element={<ViewRMCreditRequest />}
+              />
             </Route>
 
+            {/* role route for ANALYST */}
             <Route element={<RoleRoute role="ANALYST" />}>
               <Route path="/analyst/credit-review" element={<CreditReview />} />
-              <Route path="/analyst/credit-requests/:id" element={<ViewCreditRequest />} />
+              <Route
+                path="/analyst/credit-requests/:id"
+                element={<ViewCreditRequest />}
+              />
             </Route>
           </Route>
         </Route>
