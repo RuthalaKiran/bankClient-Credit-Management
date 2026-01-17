@@ -10,7 +10,7 @@ services:
       - mongo_data:/data/db
 
   backend:
-    build: ./backend/Corporate-Credit-Management-Platform
+    build: ./Backend/Corporate-Credit-Management-Platform
     container_name: capstone-backend
     ports:
       - "8081:8081"
@@ -20,7 +20,7 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/creditdb
 
   frontend:
-    build: ./frontend
+    build: ./Frontend
     container_name: capstone-frontend
     ports:
       - "80:80"
