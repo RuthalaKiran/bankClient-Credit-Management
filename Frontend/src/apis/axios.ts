@@ -3,7 +3,9 @@ import { store } from "../redux/store";
 import { logout } from "../redux/authSlice";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
+  baseURL: "http://65.1.128.65:8081"
+
 });
 
 // add the jwt token for every reques
