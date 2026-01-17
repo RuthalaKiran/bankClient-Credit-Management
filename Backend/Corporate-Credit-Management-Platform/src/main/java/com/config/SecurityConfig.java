@@ -31,106 +31,106 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
-    private final CustomUserDetailsService userDetailsService;
-    private final JwtAuthenticationEntryPoint authEntryPoint;
-    private final CustomAccessDeniedHandler accessDeniedHandler;
+        private final JwtAuthFilter jwtAuthFilter;
+        private final CustomUserDetailsService userDetailsService;
+        private final JwtAuthenticationEntryPoint authEntryPoint;
+        private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public static final String ROLE_ADMIN = "ADMIN";
-    public static final String ROLE_RM = "RM";
-    public static final String ROLE_ANALYST = "ANALYST";
+        public static final String ROLE_ADMIN = "ADMIN";
+        public static final String ROLE_RM = "RM";
+        public static final String ROLE_ANALYST = "ANALYST";
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors(cors->{})
-                // disable CSRF
-                .csrf(csrf -> csrf.disable())
+                http
+                                .cors(cors -> {
+                                })
+                                // disable CSRF
+                                .csrf(csrf -> csrf.disable())
 
-                // stateless session
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                                // stateless session
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // for exception handling 403 and 401
-                .exceptionHandling(ex->ex
-                        .authenticationEntryPoint(authEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
+                                // for exception handling 403 and 401
+                                .exceptionHandling(ex -> ex
+                                                .authenticationEntryPoint(authEntryPoint)
+                                                .accessDeniedHandler(accessDeniedHandler))
 
-                // authorize endpoints
-                .authorizeHttpRequests(auth -> auth
+                                // authorize endpoints
+                                .authorizeHttpRequests(auth -> auth
 
-                        // public
-                        .requestMatchers(
-                                "/api/auth/login",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html"
-                        ).permitAll()
+                                                // public
+                                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                        .requestMatchers(
+                                                                "/api/auth/login",
+                                                                "/v3/api-docs/**",
+                                                                "/swagger-ui/**",
+                                                                "/swagger-ui.html")
+                                                .permitAll()
 
-                        // admin
-                        .requestMatchers("/api/auth/register").hasRole(ROLE_ADMIN)
-                        .requestMatchers("/api/admin/**").hasRole(ROLE_ADMIN)
-                        .requestMatchers("/api/users").hasRole(ROLE_ADMIN)
+                                                // admin
+                                                .requestMatchers("/api/auth/register").hasRole(ROLE_ADMIN)
+                                                .requestMatchers("/api/admin/**").hasRole(ROLE_ADMIN)
+                                                .requestMatchers("/api/users").hasRole(ROLE_ADMIN)
 
-                        // RM only
-                        .requestMatchers("/api/rm/**").hasRole(ROLE_RM)
+                                                // RM only
+                                                .requestMatchers("/api/rm/**").hasRole(ROLE_RM)
 
-                        // Credit requests
-                        .requestMatchers(HttpMethod.POST, "/api/credit-requests").hasRole(ROLE_RM)
-                        .requestMatchers(HttpMethod.PUT, "/api/credit-requests/**").hasRole(ROLE_ANALYST)
-                        .requestMatchers(HttpMethod.GET, "/api/credit-requests/**").authenticated()
+                                                // Credit requests
+                                                .requestMatchers(HttpMethod.POST, "/api/credit-requests")
+                                                .hasRole(ROLE_RM)
+                                                .requestMatchers(HttpMethod.PUT, "/api/credit-requests/**")
+                                                .hasRole(ROLE_ANALYST)
+                                                .requestMatchers(HttpMethod.GET, "/api/credit-requests/**")
+                                                .authenticated()
 
-                        // everything else authenticated
-                        .anyRequest().authenticated()
-                )
+                                                // everything else authenticated
+                                                .anyRequest().authenticated())
 
-                .authenticationProvider(authenticationProvider())
-                // JWT filter
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                                .authenticationProvider(authenticationProvider())
+                                // JWT filter
+                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
-                // "http://localhost:5173"
-                //  "http://65.1.128.65:80"
-                "*"
-        ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+                config.setAllowedOriginPatterns(List.of(
+                                // "http://localhost:5173"
+                                // // "http://65.1.128.65:80"
+                                "*")); // ✅ correct
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", config);
 
-        return source;
-    }
+                return source;
+        }
 
+        @Bean
+        public AuthenticationProvider authenticationProvider() {
+                DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+                provider.setUserDetailsService(userDetailsService);
+                provider.setPasswordEncoder(passwordEncoder());
+                return provider;
+        }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(
+                        AuthenticationConfiguration configuration) throws Exception {
+                return configuration.getAuthenticationManager();
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
 }
